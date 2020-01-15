@@ -3,14 +3,14 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = "fluent-plugin-loggly-syslog"
+  spec.name          = "fluent-plugin-syslog"
   spec.version       = "0.1.0"
-  spec.authors       = ["Chris Rust", "Chris Erway"]
-  spec.email         = ["chris.rust@solarwinds.com", "chris.erway@solarwinds.com"]
+  spec.authors       = ["Aaron Collins"]
+  spec.email         = ["aaron.collins@hiremya.com"]
 
-  spec.summary       = %q{Fluentd output plugin for Loggly}
-  spec.description   = %q{Fluentd syslog output plugin for Loggly}
-  spec.homepage      = "https://github.com/solarwinds/fluent-plugin-loggly-syslog"
+  spec.summary       = %q{Fluentd output plugin}
+  spec.description   = %q{Fluentd syslog output plugin}
+  spec.homepage      = "https://github.com/analogrithems/fluent-plugin-syslog"
   spec.license       = "Apache-2.0"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

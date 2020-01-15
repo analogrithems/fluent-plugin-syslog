@@ -1,4 +1,4 @@
-REPO_NAME=fluent-plugin-loggly-syslog
+REPO_NAME=fluent-plugin-syslog
 
 bundle:
 	bundle install

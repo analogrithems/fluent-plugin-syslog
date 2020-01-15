@@ -1,6 +1,5 @@
-# Fluent::Plugin::LogglySyslog
+# Fluent::Plugin::Syslog
 
-[![Gem Version](https://badge.fury.io/rb/fluent-plugin-loggly-syslog.svg)](https://badge.fury.io/rb/fluent-plugin-loggly-syslog) [![CircleCI](https://circleci.com/gh/solarwinds/fluent-plugin-loggly-syslog/tree/master.svg?style=shield)](https://circleci.com/gh/solarwinds/fluent-plugin-loggly-syslog/tree/master)
 
 ## Description
 
@@ -10,33 +9,33 @@ This repository contains the Fluentd Loggly Output Plugin.
 
 Install this gem when setting up fluentd:
 ```ruby
-gem install fluent-plugin-loggly-syslog
+gem install fluent-plugin-syslog
 ```
 
 ## Usage
 
 ### Setup
 
-This is a buffered output plugin for Fluentd that's configured to send logs to Loggly using the [syslog endpoint](https://www.loggly.com/docs/streaming-syslog-without-using-files/).
+This is a buffered output plugin for Fluentd that's configured to send logs to Syslog.
 
 Each log line will arrive in Loggly with 2 payloads: the json representation of the fluent record and the data from the syslog wrapper.
 
 Data from the syslog wrapper includes:
 ```
 appName - this defaults to the fluent tag
-hostname - this can be optionally configured as loggly_hostname (see below)
+hostname - this can be optionally configured as syslog_hostname (see below)
 timestamp - this defaults to the timestamp associated with the record and falls back to the current time at the time it reaches the plugin
 ```
 
-You're also able to (optionally) tag loggly records with any string you want, see `loggly_tag` below. 
+You're also able to (optionally) tag syslog records with any string you want, see `syslog_tag` below. 
 
 To configure this in fluentd:
 ```xml
 <match whatever.*>
-  @type loggly_syslog
-  loggly_token <your_loggly_token>
-  loggly_tag <your_loggly_tag>
-  loggly_hostname "#{ENV['HOST']}"
+  @type syslog_syslog
+  syslog_token <your_syslog_token>
+  syslog_tag <your_syslog_tag>
+  syslog_hostname "#{ENV['HOST']}"
   parse_json true
 </match>
 ```
@@ -53,8 +52,8 @@ If the plugin fails to write to Loggly for any reason, the log message will be p
 If you want to change any of these parameters simply add them to the match stanza. For example, to flush the buffer every 60 seconds and stop retrying after 2 attempts, set something like:
 ```xml
 <match whatever.*>
-  @type loggly_syslog
-  loggly_token <your_loggly_token>
+  @type syslog_syslog
+  syslog_token <your_syslog_token>
   flush_interval 60
   retry_limit 2
 </match>
@@ -64,8 +63,8 @@ BufferedOutput also allows you to keep the buffer stored on disk, where it can p
 
 ```xml
 <match whatever.*>
-  @type loggly_syslog
-  loggly_token <your_loggly_token>
+  @type syslog_syslog
+  syslog_token <your_syslog_token>
   buffer_type file
   buffer_path /var/log/fluentd-buffer
 </match>
@@ -87,7 +86,7 @@ Simply enable the fluent-plugin-kubernetes_metadata_filter gem in your Fluentd s
 Then add the following annotation to each namespace or pod that you'd like to redirect logs for:
 
 ```
-solarwinds.io/loggly_token: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+syslog_token: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 ```
 
 If both a pod and the namespace it's in have this annotation, the pod's annotation takes precedence.
@@ -104,19 +103,16 @@ We have a [Makefile](Makefile) to wrap common functions and make life easier.
 ### Test
 `make test`
 
-### Release in [RubyGems](https://rubygems.org/gems/fluent-plugin-loggly-syslog)
-To release a new version, update the version number in the [GemSpec](fluent-plugin-loggly-syslog.gemspec) and then, run:
+### Release in [RubyGems](https://rubygems.org/gems/fluent-plugin-syslog)
+To release a new version, update the version number in the [GemSpec](fluent-plugin-syslog.gemspec) and then, run:
 
 `make release`
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at: https://github.com/solarwinds/fluent-plugin-loggly-syslog
+Bug reports and pull requests are welcome on GitHub at: https://github.com/analogrithems/fluent-plugin-syslog
 
 ## License
 
 The gem is available as open source under the terms of the [Apache License](LICENSE).
 
-# Questions/Comments?
-
-Please [open an issue](https://github.com/solarwinds/fluent-plugin-loggly-syslog/issues/new), we'd love to hear from you.
