@@ -78,12 +78,12 @@ module Fluent
       #     [xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx@41058 tag="syslog"] \
       #     message'
 
-      if @parse_json && record.dig('message')
+      if @parse_json && record.dig('log')
         begin
           parser = Yajl::Parser.new
-          parsed_message = parser.parse(record['message'])
-          record['log'] = parsed_message
-          record.delete('message')
+          parsed_message = parser.parse(record['log'])
+          record['message'] = parsed_message
+          record.delete('log')
         rescue Yajl::ParseError
         end
       end
