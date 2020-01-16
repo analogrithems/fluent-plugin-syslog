@@ -3,7 +3,7 @@
 
 ## Description
 
-This repository contains the Fluentd Loggly Output Plugin.
+This repository contains the Fluentd Syslog Output Plugin.
 
 ## Installation
 
@@ -32,7 +32,7 @@ You're also able to (optionally) tag syslog records with any string you want, se
 To configure this in fluentd:
 ```xml
 <match whatever.*>
-  @type syslog_syslog
+  @type syslog
   syslog_token <your_syslog_token>
   syslog_tag <your_syslog_tag>
   syslog_hostname "#{ENV['HOST']}"
@@ -52,7 +52,7 @@ If the plugin fails to write to Loggly for any reason, the log message will be p
 If you want to change any of these parameters simply add them to the match stanza. For example, to flush the buffer every 60 seconds and stop retrying after 2 attempts, set something like:
 ```xml
 <match whatever.*>
-  @type syslog_syslog
+  @type syslog
   syslog_token <your_syslog_token>
   flush_interval 60
   retry_limit 2
@@ -63,33 +63,12 @@ BufferedOutput also allows you to keep the buffer stored on disk, where it can p
 
 ```xml
 <match whatever.*>
-  @type syslog_syslog
+  @type syslog
   syslog_token <your_syslog_token>
   buffer_type file
   buffer_path /var/log/fluentd-buffer
 </match>
 ```
-
-### Annotations
-
-If you're running on Kubernetes you can use annotations to redirect logs to alternate Loggly accounts.
-
-Simply enable the fluent-plugin-kubernetes_metadata_filter gem in your Fluentd setup and configure it to match annotations:
-
-```
-<filter kubernetes.**>
-  type kubernetes_metadata
-  annotation_match ["solarwinds.io/*"]
-</filter>
-```
-
-Then add the following annotation to each namespace or pod that you'd like to redirect logs for:
-
-```
-syslog_token: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-```
-
-If both a pod and the namespace it's in have this annotation, the pod's annotation takes precedence.
 
 ## Development
 
